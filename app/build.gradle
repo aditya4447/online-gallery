@@ -5,6 +5,10 @@ plugins {
 android {
     compileSdk 30
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "in.omdev.onlinegallery"
         minSdk 21
