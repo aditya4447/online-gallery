@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Online Gallery</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_in_with_google_to_continue_using_the_app">Sign in with Google to continue using the app.</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="please_sign_in">Please sign in</string>
+    <string name="_welcome_message">Welcome %s (%s)</string>
+    <string name="profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile_image">Profile image</string>
+    <string name="sign_out">Sign out</string>
 </resources>
