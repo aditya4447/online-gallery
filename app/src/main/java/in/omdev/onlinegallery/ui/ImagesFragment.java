@@ -12,11 +12,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import in.omdev.onlinegallery.R;
@@ -34,6 +38,7 @@ public class ImagesFragment extends Fragment {
     private FragmentImagesBinding binding;
     private ImageViewModel viewModel;
     private RequestManager withGlide;
+    private StaggeredGridLayoutManager layoutManager;
 
     public ImagesFragment() {
         // Required empty public constructor
@@ -80,14 +85,45 @@ public class ImagesFragment extends Fragment {
         });
 
         // setup recycler view
-        binding.recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL));
+        layoutManager = new StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager.VERTICAL);
+        binding.recyclerView.setLayoutManager(layoutManager);
         ImagesAdapter adapter = new ImagesAdapter();
         binding.recyclerView.setAdapter(adapter);
 
         // Listen for loaded images
-        viewModel.getImagesLiveData().observe(getViewLifecycleOwner(), images ->
-                adapter.notifyDataSetChanged());
+        viewModel.getImagesLiveData().observe(getViewLifecycleOwner(), images -> {
+            adapter.notifyDataSetChanged();
+            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+                @Override
+                public int getOldListSize() {
+                    return adapter.images.size();
+                }
+
+                @Override
+                public int getNewListSize() {
+                    return images.size();
+                }
+
+                @Override
+                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                    return Objects.equals(adapter.images.get(oldItemPosition).getId(),
+                            viewModel.getImagesLiveData().getValue().get(newItemPosition).getId());
+                }
+
+                @Override
+                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                    return true;
+                }
+            }, false);
+            adapter.images.clear();
+            adapter.images.addAll(viewModel.getImagesLiveData().getValue());
+            result.dispatchUpdatesTo(adapter);
+            if (viewModel.state != null) {
+                layoutManager.onRestoreInstanceState(viewModel.state);
+                viewModel.state = null;
+            }
+        });
 
     }
 
@@ -97,8 +133,17 @@ public class ImagesFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(layoutManager != null) {
+            viewModel.state = layoutManager.onSaveInstanceState();
+        }
+    }
+
     private class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageHolder> {
 
+        private final ArrayList<Image> images = viewModel.getImages();
 
         @NonNull
         @Override
@@ -116,8 +161,8 @@ public class ImagesFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull ImageHolder holder, int position) {
-            if (position < viewModel.getImagesLiveData().getValue().size() - 1) {
-                holder.setImage(viewModel.getImagesLiveData().getValue().get(position));
+            if (position < images.size() - 1) {
+                holder.setImage(images.get(position));
             }
         }
 
@@ -131,12 +176,12 @@ public class ImagesFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return viewModel.getImagesLiveData().getValue().size();
+            return images.size();
         }
 
         @Override
         public int getItemViewType(int position) {
-            if (position == viewModel.getImagesLiveData().getValue().size() - 1) {
+            if (position == images.size() - 1) {
                 return TYPE_LOADING;
             }
             return TYPE_IMAGE;
