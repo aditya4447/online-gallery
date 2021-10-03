@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import in.omdev.onlinegallery.Const;
 import in.omdev.onlinegallery.R;
 import in.omdev.onlinegallery.databinding.FragmentProfileBinding;
 import in.omdev.onlinegallery.viewmodel.ProfileViewModel;

@@ -6,10 +6,15 @@
         <entry key="..\:/extra/OnlineGallery/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1125" />
         <entry key="..\:/extra/OnlineGallery/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1125" />
         <entry key="..\:/extra/OnlineGallery/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1125" />
+        <entry key="..\:/extra/OnlineGallery/app/src/main/res/layout/activity_image.xml" value="0.1" />
         <entry key="..\:/extra/OnlineGallery/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/extra/OnlineGallery/app/src/main/res/layout/fragment_image.xml" value="0.13" />
+        <entry key="..\:/extra/OnlineGallery/app/src/main/res/layout/fragment_images.xml" value="0.1" />
         <entry key="..\:/extra/OnlineGallery/app/src/main/res/layout/fragment_main.xml" value="0.2" />
         <entry key="..\:/extra/OnlineGallery/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
         <entry key="..\:/extra/OnlineGallery/app/src/main/res/layout/fragment_sign_in.xml" value="0.25" />
+        <entry key="..\:/extra/OnlineGallery/app/src/main/res/layout/item_image.xml" value="0.18" />
+        <entry key="..\:/extra/OnlineGallery/app/src/main/res/layout/item_loader.xml" value="0.20416666666666666" />
         <entry key="..\:/extra/OnlineGallery/app/src/main/res/menu/menu_main.xml" value="0.20416666666666666" />
       </map>
     </option>

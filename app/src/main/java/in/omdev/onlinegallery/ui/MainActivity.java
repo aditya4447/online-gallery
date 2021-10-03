@@ -1,16 +1,14 @@
 package in.omdev.onlinegallery.ui;
 
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.firebase.ui.auth.AuthUI;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
@@ -18,10 +16,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.room.Room;
+import in.omdev.onlinegallery.ImagesDatabase;
 import in.omdev.onlinegallery.R;
+import in.omdev.onlinegallery.dao.ImagesDao;
 import in.omdev.onlinegallery.databinding.ActivityMainBinding;
 import in.omdev.onlinegallery.viewmodel.MainViewModel;
-import in.omdev.onlinegallery.viewmodel.ProfileViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
                 user = null;
 
-                // perform other sign out actions TODO clear data
+                // perform other sign out actions
                 onSignOut();
             } else {
                 // user logged in
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(binding.containerMain.getId(), MainFragment.newInstance())
+                        .replace(binding.containerMain.getId(), ImagesFragment.newInstance())
                         .commit();
 
                 user = firebaseUser;
@@ -99,6 +99,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void onSignOut() {
         removeProfileOption();
+        AsyncTask.execute(() -> {
+            ImagesDao imagesDao = Room.databaseBuilder(this,
+                    ImagesDatabase.class, "images").build().imagesDao();
+            imagesDao.deleteAll();
+        });
     }
 
     private void removeProfileOption() {

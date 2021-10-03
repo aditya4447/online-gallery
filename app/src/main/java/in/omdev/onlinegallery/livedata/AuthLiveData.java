@@ -1,4 +1,4 @@
-package in.omdev.livedata;
+package in.omdev.onlinegallery.livedata;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
