@@ -34,7 +34,8 @@ public class ProfileFragment extends Fragment implements Observer<FirebaseUser> 
         user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
             getParentFragmentManager().beginTransaction().remove(this)
-                    .addToBackStack(null).commit();
+                    .commit();
+            getParentFragmentManager().popBackStack();
             return false;
         }
         return true;
