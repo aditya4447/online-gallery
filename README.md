@@ -6,6 +6,8 @@ This is an online gallery that displays wallpaper from the internet. You need to
 
 This app uses [Firebase](https://firebase.google.com) for implementing Google sign in. To build this app, you will need to create a firebase app and place **google.json** file that be obtained from Firebase Console in the **app/** directory.
 
+Also, you will need to add SHA-1 hash of your debug/release key to firebase. [Read more](https://developers.google.com/android/guides/client-auth).
+
 # Third party libraries
 
 This app uses several third party libraries in order to get work done quickly and easily. Third party libraries used in this app are listed bellow:
